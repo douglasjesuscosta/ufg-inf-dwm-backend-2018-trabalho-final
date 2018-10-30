@@ -5,14 +5,7 @@ const allowCors = require('./cors');
 const queryParser = require('express-query-int');
 const router = require('./router');
 require('./compras/comprasController');
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
 
-//const _ = require('lodash');
-
-const {mongoose} = require('./db/mongoose');
-const {Produto} = require('./models/produto');
-const {ObjectID} = require('mongodb');
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -114,6 +107,28 @@ server.delete('/produtos/:id', (req, res) => {
     res.send({doc});
   }).catch((e) => res.status(400).send('Problema para atualizar produto.'));
 }); */
+
+/**
+ * Compras
+ */
+
+ /**
+  * Get all compras
+  */
+.get(function(req, res){
+  flow.emit("listarCompras", function(compras){
+    console.log("passei");
+    res.send(compras);
+  })
+})
+
+.post(function(req, res){
+  this.authenticate();
+  flow.emit("inserirCompra", function(compra){
+    console.log(compra);
+    res.send(compra);
+  })
+})
 
 server.listen(3000, function() {
   console.log(`MyAPI is running on port 3000.`)
