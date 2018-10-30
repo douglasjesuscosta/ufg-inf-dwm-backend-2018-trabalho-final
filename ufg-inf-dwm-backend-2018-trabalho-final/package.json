@@ -1,0 +1,23 @@
+{
+  "name": "ufg-inf-dwm-backend-2018-trabalho-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cors.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-query-int": "^3.0.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.7",
+    "mongoose-paginate": "^5.0.3",
+    "node-restful": "^0.2.6",
+    "pm2": "^3.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
