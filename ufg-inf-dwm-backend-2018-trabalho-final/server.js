@@ -8,6 +8,8 @@ require('./compras/comprasController');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
+//const _ = require('lodash');
+
 const {mongoose} = require('./db/mongoose');
 const {Produto} = require('./models/produto');
 const {ObjectID} = require('mongodb');
@@ -92,6 +94,26 @@ server.delete('/produtos/:id', (req, res) => {
     }
   }).catch((e) => res.status(404).send('Problema para deletar produto.'))
 })
+
+/**
+ * Update Produto
+ */
+/* server.patch('/produtos/:id', (req, res) => {
+  var id = req.params.id;
+  var body = _.pick(req.body, ['nome', 'preco']);
+
+  if(!ObjectID.isValid(id)) {
+    res.status(404).send('Id inválido.')
+  }
+
+  Todo.findByIdAndRemove(id, {$set: body}, {new: true}).then((doc) => {
+    if(!doc) {
+      return res.status(400).send('Produto não encontrado');
+    }
+
+    res.send({doc});
+  }).catch((e) => res.status(400).send('Problema para atualizar produto.'));
+}); */
 
 server.listen(3000, function() {
   console.log(`MyAPI is running on port 3000.`)
