@@ -95,27 +95,7 @@ server.get('/compras', (req, res) => {
  * Create compra
  */
 server.post('/compras', (req, res) => {
-
-  var user = {
-    email: req.body.email,
-    senha: req.body.senha
-  }
-  console.log(req.body);
-
-  var compra = new Compra({
-    idCliente: user.email,
-    valor: req.body.valor,
-    date: Date.now,
-    products: req.body.products
-  });
-
-  console.log(compra);
-
-  compra.save().then((doc) => {
-    res.send(doc);
-  }, (e) => {
-    res.status(400).send(e);
-  });
+  saveCompra(req, res);
 })
 
 /**
@@ -129,6 +109,28 @@ function authenticate(user){
     }
     console.log(body.url);
     console.log(body.explanation);
+  });
+}
+
+function saveCompra(req, res){
+  var user = {
+    email: req.body.email,
+    senha: req.body.senha
+  }
+
+  var compra = new Compra({
+    idCliente: null,
+    valor: req.body.valor,
+    date: Date.now(),
+    products: req.body.products
+  });
+
+  console.log(compra);
+
+  compra.save().then((doc) => {
+    res.send(doc);
+  }, (e) => {
+    res.status(400).send(e);
   });
 }
 

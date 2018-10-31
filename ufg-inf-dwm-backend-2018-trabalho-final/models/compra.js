@@ -2,10 +2,9 @@ var mongoose = require('mongoose');
 
 var Compra = mongoose.model('Compra', {
     idCliente: { 
-      type: Number, 
-      required: true 
+      type: Number    
     },
-    valorCompra: {
+    valor: {
       type: Number, 
       require: true
     },
