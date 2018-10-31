@@ -1,25 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const server = express();
-const allowCors = require('./cors');
 const queryParser = require('express-query-int');
-const router = require('./router');
-require('./compras/comprasController');
+const request = require('request');
 
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
-server.use(allowCors)
 server.use(queryParser())
-server.use(passport.initialize());
-server.use(passport.session());
-server.use(router);
-
-server.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
-);
 
 
 /**
@@ -89,6 +77,56 @@ server.delete('/produtos/:id', (req, res) => {
 })
 
 /**
+ * COMPRAS
+ */
+
+ /**
+  * Get all compras
+  */
+server.get('/compras', (req, res) => {
+    console.log("Listar");
+});
+
+/**
+ * Create compra
+ */
+server.post('/compras', (req, res) => {
+
+  var user = {
+    email: req.body.email,
+    senha: req.body.senha
+  }
+
+  if(this.authenticate(user)){
+    var compra = new Compra({
+      idCliente: user.email,
+      valor: req.body.valor,
+      date: Date.now,
+      products: req.body.products
+    });
+  
+    console.log(compra);
+
+    compra.save().then((doc) => {
+      res.send(compra);
+    }, (e) => {
+      res.status(400).send(e);
+    });
+
+  }else{
+    res.status(404).send("Falha na autentificação");
+  }
+})
+
+function authenticate(user){
+  request('localhost:8080/user', { json: true }, (err, res, user) => {
+    if (err) { return console.log(err); }
+    console.log(body.url);
+    console.log(body.explanation);
+  });
+}
+
+/**
  * Update Produto
  */
 /* server.patch('/produtos/:id', (req, res) => {
@@ -108,27 +146,6 @@ server.delete('/produtos/:id', (req, res) => {
   }).catch((e) => res.status(400).send('Problema para atualizar produto.'));
 }); */
 
-/**
- * Compras
- */
-
- /**
-  * Get all compras
-  */
-.get(function(req, res){
-  flow.emit("listarCompras", function(compras){
-    console.log("passei");
-    res.send(compras);
-  })
-})
-
-.post(function(req, res){
-  this.authenticate();
-  flow.emit("inserirCompra", function(compra){
-    console.log(compra);
-    res.send(compra);
-  })
-})
 
 server.listen(3000, function() {
   console.log(`MyAPI is running on port 3000.`)
