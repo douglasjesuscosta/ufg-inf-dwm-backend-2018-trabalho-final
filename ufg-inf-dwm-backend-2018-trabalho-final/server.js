@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const server = express();
 const queryParser = require('express-query-int');
 const request = require('request');
+const Compra = require ('./models/compra');
+const Produto = require('./models/produto');
 
 
 server.use(bodyParser.urlencoded({ extended: true }))
@@ -96,26 +98,22 @@ server.post('/compras', (req, res) => {
     email: req.body.email,
     senha: req.body.senha
   }
+  console.log(req.body);
 
-  if(this.authenticate(user)){
-    var compra = new Compra({
-      idCliente: user.email,
-      valor: req.body.valor,
-      date: Date.now,
-      products: req.body.products
-    });
-  
-    console.log(compra);
+  var compra = new Compra({
+    idCliente: user.email,
+    valor: req.body.valor,
+    date: Date.now,
+    products: req.body.products
+  });
 
-    compra.save().then((doc) => {
-      res.send(compra);
-    }, (e) => {
-      res.status(400).send(e);
-    });
+  console.log(compra);
 
-  }else{
-    res.status(404).send("Falha na autentificação");
-  }
+  this.compra.save().then((doc) => {
+    res.send(doc);
+  }, (e) => {
+    res.status(400).send(e);
+  });
 })
 
 function authenticate(user){
@@ -125,27 +123,6 @@ function authenticate(user){
     console.log(body.explanation);
   });
 }
-
-/**
- * Update Produto
- */
-/* server.patch('/produtos/:id', (req, res) => {
-  var id = req.params.id;
-  var body = _.pick(req.body, ['nome', 'preco']);
-
-  if(!ObjectID.isValid(id)) {
-    res.status(404).send('Id inválido.')
-  }
-
-  Todo.findByIdAndRemove(id, {$set: body}, {new: true}).then((doc) => {
-    if(!doc) {
-      return res.status(400).send('Produto não encontrado');
-    }
-
-    res.send({doc});
-  }).catch((e) => res.status(400).send('Problema para atualizar produto.'));
-}); */
-
 
 server.listen(3000, function() {
   console.log(`MyAPI is running on port 3000.`)

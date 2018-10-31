@@ -1,17 +1,29 @@
-const restful = require('node-restful')
-const mongoose = restful.mongoose
+var mongoose = require('mongoose');
 
-const compra = new mongoose.Model('compra', {
+var Compra = mongoose.model('Compra', {
+    idCliente: { 
+      type: Number, 
+      required: true 
+    },
+    valorCompra: {
+      type: Number, 
+      require: true
+    },
+    date: { 
+      type: Date,
+      default: Date.now
+    },
+    products: [{ 
+      name: {
+        type: String
+      },
+      value:{ 
+        type: Number
+      }, 
+      quantity:{
+        type: Number
+      } 
+    }]
+});
 
-  idCliente: { type: Number, required: true },
-  valorCompra: {type: Double, require: true},
-  date: { type: Date, default: Date.now },
-  
-  products: [{ 
-    name: String,
-    value: Number, 
-    quantity: Number
-  }],
-})
-
-module.exports = restful.model('Compra', compraSchema)
+module.exports = { Compra };
