@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const server = express();
 const queryParser = require('express-query-int');
 const request = require('request');
-const Compra = require ('./models/compra');
-const Produto = require('./models/produto');
 
+const {mongoose} = require('./db/mongoose');
+const {Produto} = require('./models/produto');
+const {Compra} = require('./models/compra');
+const {ObjectID} = require('mongodb');
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -109,16 +111,22 @@ server.post('/compras', (req, res) => {
 
   console.log(compra);
 
-  this.compra.save().then((doc) => {
+  compra.save().then((doc) => {
     res.send(doc);
   }, (e) => {
     res.status(400).send(e);
   });
 })
 
+/**
+ * Autentification with another server
+ */
+
 function authenticate(user){
   request('localhost:8080/user', { json: true }, (err, res, user) => {
-    if (err) { return console.log(err); }
+    if (err) { 
+      return console.log(err); 
+    }
     console.log(body.url);
     console.log(body.explanation);
   });

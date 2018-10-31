@@ -1,7 +1,6 @@
 const express = require('express');
 const flow = require('./flow');
 const router = express.Router();
-const passport = require('passport');
 
 router.route('/compras')
 
