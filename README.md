@@ -12,9 +12,9 @@ link para mongodb: https://www.mongodb.com/
 
 2º Baixe ou clone este repositório localmente
 
-3º Instale todas dependências do projeto utilizando o comando <b>npm install<b> no diretório do projeto
+3º Instale todas dependências do projeto utilizando o comando <b>npm install</b> no diretório do projeto
 
-4º Inicie o servidor com a utilização do comando <b>node server.js<b> 
+4º Inicie o servidor com a utilização do comando <b>node server.js</b> 
 
 Para a utilização do microserviço é necessário de um app para envio e recebimento de dados via requisições HTTP, como recomendação o postman
 
