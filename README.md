@@ -3,7 +3,7 @@ Trabalho final para a disciplina Programação Back-End Avançada no curso de Es
 
 Esse Microserviço é responsável pelo controle das compras é dos produtos de um supermercado.
 
-Passos para instalação:
+<h2>Passos para instalação:</h2>
 
 1º Baixe e instale o interpretador runtime NodeJS com versão igual ou superior a 8.10 e instale o banco de dados MongoDB em sua máquina
 
