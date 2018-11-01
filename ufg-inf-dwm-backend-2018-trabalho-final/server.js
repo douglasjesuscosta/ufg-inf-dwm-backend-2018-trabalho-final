@@ -95,43 +95,63 @@ server.get('/compras', (req, res) => {
  * Create compra
  */
 server.post('/compras', (req, res) => {
-  saveCompra(req, res);
+  var user = {
+    id: null,
+    email: req.body.email,
+    senha: req.body.senha
+  }
+  console.log(user);
+  user = authenticate(user, (userRetorned) =>{
+    saveCompra(req, res, userRetorned)
+  });
 })
 
 /**
  * Autentification with another server
  */
 
-function authenticate(user){
-  request('localhost:8080/user', { json: true }, (err, res, user) => {
-    if (err) { 
-      return console.log(err); 
+function authenticate(user, callBack){
+  request({
+    url: "http://localhost:8080/user",
+    method: "POST",
+    json: true,   // <--Very important!!!
+    body: user
+  },
+  function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var userRetorned = {
+        id: response.body.id,
+        email: response.body.email,
+        senha: response.body.senha
+      }
+      callBack(userRetorned);
+    }else{
+      callBack(null);
     }
-    console.log(body.url);
-    console.log(body.explanation);
   });
+  
 }
 
-function saveCompra(req, res){
-  var user = {
-    email: req.body.email,
-    senha: req.body.senha
+function saveCompra(req, res, user){
+
+  if(user !== null){
+    var compra = new Compra({
+      idCliente: user.id,
+      valor: req.body.valor,
+      date: Date.now(),
+      products: req.body.products
+    });
+
+    console.log(compra);
+
+    compra.save().then((doc) => {
+      res.send(doc);
+    }, (e) => {
+      res.status(400).send(e);
+    });
+  }else{
+      res.status(400).send("Algo deu errado. Tente novamente!");
   }
-
-  var compra = new Compra({
-    idCliente: null,
-    valor: req.body.valor,
-    date: Date.now(),
-    products: req.body.products
-  });
-
-  console.log(compra);
-
-  compra.save().then((doc) => {
-    res.send(doc);
-  }, (e) => {
-    res.status(400).send(e);
-  });
 }
 
 server.listen(3000, function() {
