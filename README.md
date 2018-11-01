@@ -20,7 +20,7 @@ Para a utilização do microserviço é necessário de um app para envio e receb
 
 link para o postman: https://www.getpostman.com/
 
-<h2>Exemplo de requisições:<h2>
+<h2>Exemplo de requisições:</h2>
 
 1º Para cadastrar um produto
 
