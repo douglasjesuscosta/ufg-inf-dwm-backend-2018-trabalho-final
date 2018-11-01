@@ -50,3 +50,8 @@ requisição DELETE
 url: localhost:3000/produtos/:id
 
 em que :id é o _id do produto
+
+5º Para atualizar os dados de um produto especíico
+
+requisição PATCH
+url: 

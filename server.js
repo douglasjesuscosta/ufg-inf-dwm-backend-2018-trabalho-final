@@ -8,6 +8,7 @@ const {mongoose} = require('./db/mongoose');
 const {Produto} = require('./models/produto');
 const {Compra} = require('./models/compra');
 const {ObjectID} = require('mongodb');
+const _ = require('lodash');
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -15,7 +16,7 @@ server.use(queryParser())
 
 
 /**
- * Create Produto
+ * Criar Produto
  */
 server.post('/produtos', (req, res) => {
   var produto = new Produto({
@@ -35,8 +36,8 @@ server.post('/produtos', (req, res) => {
  * Get Produtos
  */
 server.get('/produtos', (req, res) => {
-  Produto.find().then((todos) => {
-    res.send({todos});
+  Produto.find().then((produtos) => {
+    res.send({produtos});
   }, (e) => {
     res.status(400).send(e);
   });
@@ -73,11 +74,31 @@ server.delete('/produtos/:id', (req, res) => {
 
   Produto.findByIdAndRemove(id).then((doc) => {
     if(!doc) {
-      res.status(404).send();
+      res.status(404).send('Produto não encontrado');
     } else {
       res.send({doc});
     }
   }).catch((e) => res.status(404).send('Problema para deletar produto.'))
+})
+
+/**
+ * Atualizar produto
+ */
+server.patch('/produtos/:id', (req, res) => {
+  var id = req.params.id;
+  var body = _.pick(req.body, ['nome', 'preco']);
+
+  if(!ObjectID.isValid(id)) {
+    res.status(404).send('ID inválido.');
+  }
+
+  Produto.findByIdAndUpdate(id, {$set: body}, {new: true}).then((doc) => {
+    if(!doc) {
+      return res.status(400).send('Produto não encontrado');
+    }
+
+    res.send({doc});
+  }).catch((e) => res.status(400).send('Problema para atualizar produto.'));
 })
 
 /**
