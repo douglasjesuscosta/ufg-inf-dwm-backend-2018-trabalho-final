@@ -75,19 +75,18 @@ Para o cadastro da compra é necessário informar, além dos dados da compra, o 
 
 requisição POST
 
-Corpo da requisição:
-{
-	"idCliente": null,
-	"email": "dougls.jesuscosta@gmail.com",
-	"senha": "1234567",
-	"valor": 150,
-	"date": null,
-	"products": [
-		{
-		"name": "Batata",
-		"valor": 150,
-		"quantidade": 1
-		}
-	
-	]
-}
+Corpo da requisição: <br />
+{<br />
+	"idCliente": null,<br />
+	"email": "dougls.jesuscosta@gmail.com",<br />
+	"senha": "1234567",<br />
+	"valor": 150,<br />
+	"date": null,<br />
+	"products": [<br />
+		{<br />
+		"name": "Batata",<br />
+		"valor": 150,<br />
+		"quantidade": 1<br />
+		}<br />
+	]<br />
+}<br />
