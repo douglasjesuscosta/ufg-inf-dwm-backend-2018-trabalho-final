@@ -22,6 +22,8 @@ link para o postman: https://www.getpostman.com/
 
 <h2>Exemplo de requisições:</h2>
 
+PRODUTOS
+
 1º Para cadastrar um produto
 
 requisição POST 
@@ -63,4 +65,29 @@ Corpo da requisição em JSON
 {
 	"nome": "<novoNomeDoProduto>",
 	"preco": <novoPreçoDoProduto>
+}
+	
+COMPRAS 
+
+1º Para cadastrar uma compra
+
+Para o cadastro da compra é necessário informar, além dos dados da compra, o email e senha do usuário. Esses dados serão enviados para o outro servidor para que seja feita a autentificação e para que o identificador de tal usuário que se encontra apenas no servidor de controle de usuário, seja mandado para a conclusão do cadastro da compra. 
+
+requisição POST
+
+Corpo da requisição:
+{
+	"idCliente": null,
+	"email": "dougls.jesuscosta@gmail.com",
+	"senha": "1234567",
+	"valor": 150,
+	"date": null,
+	"products": [
+		{
+		"name": "Batata",
+		"valor": 150,
+		"quantidade": 1
+		}
+	
+	]
 }
